@@ -7,14 +7,33 @@
 //
 
 import UIKit
+import AVFoundation
+import AudioToolbox
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, AVAudioPlayerDelegate {
+    
+    var soundName : AVAudioPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
+    
+    
+    func playSound() {
+        
+        let soundURL = Bundle.main.url(forResource: "fileName", withExtension: "")
+        
+        do {
+            soundName = try AVAudioPlayer(contentsOf: soundURL!)
+        }
+        catch {
+            print("Cannot locate file \(error)!")
+        }
+        
+        AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        soundName.play()
+    }
 }
+
+
 
